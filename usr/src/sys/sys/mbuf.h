@@ -151,6 +151,8 @@ struct mbuf {
  *	MBUFLOCK(code)
  * prevents a section of code from from being interrupted by network
  * drivers.
+ *
+ * 这里应该是自旋锁？
  */
 #define	MBUFLOCK(code) \
 	{ int ms = splimp(); \
@@ -355,7 +357,7 @@ struct mbstat {
 #ifdef	KERNEL
 extern	struct mbuf *mbutl;		/* virtual address of mclusters */
 extern	char *mclrefcnt;		/* cluster reference counts */
-struct	mbstat mbstat;
+struct	mbstat mbstat; // 全局变量 mbuf的统计信息
 extern	int nmbclusters;
 union	mcluster *mclfree;
 int	max_linkhdr;			/* largest link-level header */
