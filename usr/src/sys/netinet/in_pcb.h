@@ -39,6 +39,9 @@
  * entries, local and foreign socket numbers, and pointers
  * up (to a socket structure) and down (to a protocol-specific)
  * control block.
+ *
+ * Internet Protocol Control Block
+ * 用链表串起来，存储了socket4元组
  */
 struct inpcb {
 	struct	inpcb *inp_next,*inp_prev;
@@ -49,7 +52,7 @@ struct inpcb {
 	u_short	inp_fport;		/* foreign port */
 	struct	in_addr inp_laddr;	/* local host table entry */
 	u_short	inp_lport;		/* local port */
-	struct	socket *inp_socket;	/* back pointer to socket */
+	struct	socket *inp_socket;	/* back pointer to socket 对应的socket */
 	caddr_t	inp_ppcb;		/* pointer to per-protocol pcb */
 	struct	route inp_route;	/* placeholder for routing entry */
 	int	inp_flags;		/* generic IP/datagram flags */

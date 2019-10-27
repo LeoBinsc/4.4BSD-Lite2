@@ -67,9 +67,9 @@
 struct m_hdr {
 	struct	mbuf *mh_next;		/* next buffer in chain */
 	struct	mbuf *mh_nextpkt;	/* next chain in queue/record */
-	caddr_t	mh_data;		/* location of data */
-	int	mh_len;			/* amount of data in this mbuf */
-	short	mh_type;		/* type of data in this mbuf */
+	caddr_t	mh_data;		/* location of data 指向数据所开始的地址 */
+	int	mh_len;			/* amount of data in this mbuf 长度 */
+	short	mh_type;		/* type of data in this mbuf 类型 */
 	short	mh_flags;		/* flags; see below */
 };
 
@@ -86,6 +86,7 @@ struct m_ext {
 	u_int	ext_size;		/* size of buffer, for ext_free */
 };
 
+// 内存缓存链
 struct mbuf {
 	struct	m_hdr m_hdr;
 	union {
