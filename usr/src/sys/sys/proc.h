@@ -70,6 +70,8 @@ struct	pgrp {
 /*
  * Description of a process.
  *
+ * 进程
+ *
  * This structure contains the information needed to manage a thread of
  * control, known in UN*X as a process; it has references to substructures
  * containing descriptions of things that the process uses, but may share
@@ -85,7 +87,7 @@ struct	proc {
 
 	/* substructures: */
 	struct	pcred *p_cred;		/* Process owner's identity. */
-	struct	filedesc *p_fd;		/* Ptr to open files structure. */
+	struct	filedesc *p_fd;		/* Ptr to open files structure. 所打开的文件 */
 	struct	pstats *p_stats;	/* Accounting/statistics (PROC ONLY). */
 	struct	plimit *p_limit;	/* Process limits. */
 	struct	vmspace *p_vmspace;	/* Address space. */

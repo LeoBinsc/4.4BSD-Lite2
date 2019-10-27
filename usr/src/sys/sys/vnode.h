@@ -70,6 +70,8 @@ LIST_HEAD(buflists, buf);
  * v_mntvnodes is locked by the global mntvnodes simple lock.
  * v_flag, v_usecount, v_holdcount and v_writecount are
  *    locked by the v_interlock simple lock.
+ *
+ * vnode 是磁盘文件系统的一个组成部分
  */
 struct vnode {
 	u_long	v_flag;				/* vnode flags (see below) */

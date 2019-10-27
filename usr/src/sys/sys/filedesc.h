@@ -51,8 +51,8 @@
 #define NDEXTENT	50		/* 250 bytes in 256-byte alloc. */ 
 
 struct filedesc {
-	struct	file **fd_ofiles;	/* file structures for open files */
-	char	*fd_ofileflags;		/* per-process open file flags */
+	struct	file **fd_ofiles;	/* file structures for open files 所打开的文件 */
+	char	*fd_ofileflags;		/* per-process open file flags 进程默认的打开文件的flag */
 	struct	vnode *fd_cdir;		/* current directory */
 	struct	vnode *fd_rdir;		/* root directory */
 	int	fd_nfiles;		/* number of open files allocated */

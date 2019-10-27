@@ -45,29 +45,30 @@ struct uio;
 /*
  * Kernel descriptor table.
  * One entry for each open kernel vnode and socket.
+ * 文件
  */
 struct file {
 	LIST_ENTRY(file) f_list;/* list of active files */
 	short	f_flag;		/* see fcntl.h */
-#define	DTYPE_VNODE	1	/* file */
-#define	DTYPE_SOCKET	2	/* communications endpoint */
-	short	f_type;		/* descriptor type */
+#define	DTYPE_VNODE	1	/* file 普通文件类型 */
+#define	DTYPE_SOCKET	2	/* communications endpoint 网络 */
+	short	f_type;		/* descriptor type 文件类型 */
 	short	f_count;	/* reference count */
 	short	f_msgcount;	/* references from message queue */
 	struct	ucred *f_cred;	/* credentials associated with descriptor */
 	struct	fileops {
-		int	(*fo_read)	__P((struct file *fp, struct uio *uio,
+		int	(*fo_read)	__P((struct file *fp, struct uio *uio, //  读
 					    struct ucred *cred));
-		int	(*fo_write)	__P((struct file *fp, struct uio *uio,
+		int	(*fo_write)	__P((struct file *fp, struct uio *uio, // 写
 					    struct ucred *cred));
-		int	(*fo_ioctl)	__P((struct file *fp, u_long com,
+		int	(*fo_ioctl)	__P((struct file *fp, u_long com, // ioctl
 					    caddr_t data, struct proc *p));
-		int	(*fo_select)	__P((struct file *fp, int which,
+		int	(*fo_select)	__P((struct file *fp, int which, // select
 					    struct proc *p));
-		int	(*fo_close)	__P((struct file *fp, struct proc *p));
+		int	(*fo_close)	__P((struct file *fp, struct proc *p)); // 关闭
 	} *f_ops;
 	off_t	f_offset;
-	caddr_t	f_data;		/* vnode or socket */
+	caddr_t	f_data;		/* vnode or socket 具体文件数据所在 */
 };
 
 LIST_HEAD(filelist, file);

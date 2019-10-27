@@ -40,13 +40,15 @@
  * Contains send and receive buffer queues,
  * handle on protocol and pointer to protocol
  * private data and error information.
+ *
+ * socket结构体
  */
 struct socket {
-	short	so_type;		/* generic type, see socket.h */
+	short	so_type;		/* generic type, see socket.h socket类型，比如TCP，UDP，RAW等等 */
 	short	so_options;		/* from socket call, see socket.h */
 	short	so_linger;		/* time to linger while closing */
 	short	so_state;		/* internal state flags SS_*, below */
-	caddr_t	so_pcb;			/* protocol control block */
+	caddr_t	so_pcb;			/* protocol control block 具体存储数据的地方 是一个 char*指针，如果是今天，那么会写成void * */
 	struct	protosw *so_proto;	/* protocol handle */
 /*
  * Variables for connection queueing.
