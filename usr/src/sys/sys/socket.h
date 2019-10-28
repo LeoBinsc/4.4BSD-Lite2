@@ -125,10 +125,12 @@ struct	linger {
 /*
  * Structure used by kernel to store most
  * addresses.
+ *
+ * socket地址信息
  */
 struct sockaddr {
-	u_char	sa_len;			/* total length */
-	u_char	sa_family;		/* address family */
+	u_char	sa_len;			/* 长度 total length */
+	u_char	sa_family;		/* AF_INET, AF_UNIX之类的 address family */
 	char	sa_data[14];		/* actually longer; address value */
 };
 

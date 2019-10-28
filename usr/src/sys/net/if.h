@@ -79,21 +79,23 @@ struct	ether_header;
  * Structure defining a queue for a network interface.
  *
  * (Would like to call this struct ``if'', but C isn't PL/1.)
+ *
+ * 网卡
  */
 
 struct ifnet {
-	char	*if_name;		/* name, e.g. ``en'' or ``lo'' */
-	struct	ifnet *if_next;		/* all struct ifnets are chained */
-	struct	ifaddr *if_addrlist;	/* linked list of addresses per if */
+	char	*if_name;		/* 网卡名字 name, e.g. ``en'' or ``lo'' */
+	struct	ifnet *if_next;		/* 网卡用链表来表示，也就是说，所有的网卡都是串起来的 all struct ifnets are chained */
+	struct	ifaddr *if_addrlist;	/* 一个网卡可以有多个地址 linked list of addresses per if */
         int	if_pcount;		/* number of promiscuous listeners */
-	caddr_t	if_bpf;			/* packet filter structure */
+	caddr_t	if_bpf;			/* BSD packet filter packet filter structure */
 	u_short	if_index;		/* numeric abbreviation for this if  */
 	short	if_unit;		/* sub-unit for lower level driver */
 	short	if_timer;		/* time 'til if_watchdog called */
-	short	if_flags;		/* up/down, broadcast, etc. */
-	struct	if_data {
+	short	if_flags;		/* 网卡的一些状态 up/down, broadcast, etc. */
+	struct	if_data { // 这里是存储网卡信息和数据统计的
 /* generic interface information */
-		u_char	ifi_type;	/* ethernet, tokenring, etc */
+		u_char	ifi_type;	/* 网络类型 ethernet, tokenring, etc */
 		u_char	ifi_addrlen;	/* media address length */
 		u_char	ifi_hdrlen;	/* media header length */
 		u_long	ifi_mtu;	/* maximum transmission unit */
@@ -113,7 +115,7 @@ struct ifnet {
 		u_long	ifi_noproto;	/* destined for unsupported protocol */
 		struct	timeval ifi_lastchange;/* last updated */
 	}	if_data;
-/* procedure handles */
+/* procedure handles 网卡的各种调用方法 */
 	int	(*if_init)		/* init routine */
 		__P((int));
 	int	(*if_output)		/* output routine (enqueue) */
@@ -129,8 +131,8 @@ struct ifnet {
 		__P((int));		/* new autoconfig will permit removal */
 	int	(*if_watchdog)		/* timer routine */
 		__P((int));
-	struct	ifqueue {
-		struct	mbuf *ifq_head;
+	struct	ifqueue { // 这是output queue，也就是发出数据的队列
+		struct	mbuf *ifq_head;  // duang 又见mbuf
 		struct	mbuf *ifq_tail;
 		int	ifq_len;
 		int	ifq_maxlen;
@@ -220,6 +222,8 @@ struct ifnet {
  * of an interface.  They are maintained by the different address families,
  * are allocated and attached when an address is set, and are linked
  * together so all addresses for an interface can be located.
+ *
+ * 网卡的地址信息
  */
 struct ifaddr {
 	struct	sockaddr *ifa_addr;	/* address of interface */
