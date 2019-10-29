@@ -100,6 +100,7 @@ loopattach(n)
 #endif
 }
 
+// loopback 网卡的输出
 int
 looutput(ifp, m, dst, rt)
 	struct ifnet *ifp;
