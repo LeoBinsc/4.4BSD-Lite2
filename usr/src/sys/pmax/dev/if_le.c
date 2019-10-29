@@ -480,6 +480,8 @@ leinit(unit)
  * Start output on interface.  Get another datagram to send
  * off of the interface queue, and copy it to the interface
  * before starting the output.
+ *
+ * lestart 把要发出的包搬到网卡上
  */
 lestart(ifp)
 	struct ifnet *ifp;
@@ -502,6 +504,8 @@ lestart(ifp)
 		/*
 		 * If bpf is listening on this interface, let it
 		 * see the packet before we commit it to the wire.
+         *
+         * BPF: Berkerly Packet Filter
 		 */
 		if (ifp->if_bpf)
 			bpf_mtap(ifp->if_bpf, m);
@@ -512,7 +516,7 @@ lestart(ifp)
 		LER2_tmd1(tmd, LE_OWN | LE_STP | LE_ENP);
 		LENEXTTMP;
 	}
-	if (len != 0) {
+	if (len != 0) { // 把设备标注为忙
 		le->sc_if.if_flags |= IFF_OACTIVE;
 		LERDWR(ler0, LE_TDMD | LE_INEA, le->sc_r1->ler1_rdp);
 	}

@@ -632,9 +632,9 @@ lerint(unit)
 }
 
 leread(unit, buf, len)
-	int unit;
-	char *buf;
-	int len;
+	int unit; // 指定是哪个网卡
+	char *buf; // 指定所收到的frame的位置
+	int len; // 指定所收到的frame的长度
 {
 	register struct le_softc *le = &le_softc[unit];
 	register struct ether_header *et;
