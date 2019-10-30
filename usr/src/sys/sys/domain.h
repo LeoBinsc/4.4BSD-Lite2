@@ -42,6 +42,7 @@
  */
 struct	mbuf;
 
+// related protocols as domain，相关的协议，就组成一个domain。比如INET是一个，OSI是一个等等。
 struct	domain {
 	int	dom_family;		/* AF_xxx */
 	char	*dom_name;

@@ -98,6 +98,7 @@ max_linkhdr = 16;
 	timeout(pfslowtimo, NULL, 1);
 }
 
+// 根据 pr_type 来找
 struct protosw *
 pffindtype(family, type)
 	int family, type;
@@ -116,6 +117,7 @@ found:
 	return (0);
 }
 
+// 根据 pr_protocol 来找
 struct protosw *
 pffindproto(family, protocol, type)
 	int family, protocol, type;

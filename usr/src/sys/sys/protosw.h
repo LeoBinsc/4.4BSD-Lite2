@@ -56,7 +56,7 @@
  * described below.
  */
 struct protosw {
-	short	pr_type;		/* socket type used for */
+	short	pr_type;		/* socket type used for 比如 SOCK_STREAM, SOCK_DGRAM 等等 */
 	struct	domain *pr_domain;	/* domain protocol a member of */
 	short	pr_protocol;		/* protocol number */
 	short	pr_flags;		/* see below */

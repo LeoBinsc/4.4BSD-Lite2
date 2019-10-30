@@ -78,6 +78,7 @@ void	eoninput(), eonctlinput(), eonprotoinit();
 
 extern	struct domain inetdomain;
 
+// 此处，定义好什么 SOCK_DGRAM 之类的
 struct protosw inetsw[] = {
 { 0,		&inetdomain,	0,		0,
   0,		ip_output,	0,		0,
