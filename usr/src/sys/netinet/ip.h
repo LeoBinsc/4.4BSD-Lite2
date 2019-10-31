@@ -45,6 +45,8 @@
  * We declare ip_len and ip_off to be short, rather than u_short
  * pragmatically since otherwise unsigned comparisons can result
  * against negative integers quite easily, and fail in subtle ways.
+ *
+ * IP头部
  */
 struct ip {
 #if BYTE_ORDER == LITTLE_ENDIAN 

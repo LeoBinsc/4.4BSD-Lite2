@@ -64,6 +64,8 @@ static void ip_mloopback
  * header (with len, off, ttl, proto, tos, src, dst).
  * The mbuf chain containing the packet will be freed.
  * The mbuf opt, if present, will not be freed.
+ *
+ * 处理出去的IP包
  */
 int
 ip_output(m0, opt, ro, flags, imo)

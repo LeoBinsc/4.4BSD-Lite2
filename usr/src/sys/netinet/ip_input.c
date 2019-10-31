@@ -136,6 +136,12 @@ struct	route ipforward_rt;
 /*
  * Ip input routine.  Checksum and byte swap header.  If fragmented
  * try to reassemble.  Process options.  Pass to next level.
+ *
+ * 处理输入的IP包。做这么几件事情：
+ * - verification of incoming packets
+ * - option processing and forwarding
+ * - packet reassembly
+ * - demultiplexing
  */
 void
 ipintr()
@@ -189,6 +195,7 @@ next:
 		}
 		ip = mtod(m, struct ip *);
 	}
+    // 检查checksum
 	if (ip->ip_sum = in_cksum(m, hlen)) {
 		ipstat.ips_badsum++;
 		goto bad;
@@ -196,6 +203,8 @@ next:
 
 	/*
 	 * Convert fields to host representation.
+     *
+     * 把网络序转换为主机字节序
 	 */
 	NTOHS(ip->ip_len);
 	if (ip->ip_len < hlen) {
@@ -235,6 +244,7 @@ next:
 
 	/*
 	 * Check our list of addresses, to see if the packet is for us.
+     * 看看这个packet是不是发到本机IP的
 	 */
 	for (ia = in_ifaddr; ia; ia = ia->ia_next) {
 #define	satosin(sa)	((struct sockaddr_in *)(sa))
@@ -319,6 +329,7 @@ next:
 
 	/*
 	 * Not for us; forward if possible and desirable.
+     * 这个包不是发往本机的，那就看是不是要转发
 	 */
 	if (ipforwarding == 0) {
 		ipstat.ips_cantforward++;
@@ -989,6 +1000,8 @@ u_char inetctlerrmap[PRC_NCMDS] = {
  *
  * The srcrt parameter indicates whether the packet is being forwarded
  * via a source route.
+ *
+ * 把packet转发
  */
 void
 ip_forward(m, srcrt)
@@ -1021,6 +1034,7 @@ ip_forward(m, srcrt)
 	}
 	ip->ip_ttl -= IPTTLDEC;
 
+    // 确定下一跳地址
 	sin = (struct sockaddr_in *)&ipforward_rt.ro_dst;
 	if ((rt = ipforward_rt.ro_rt) == 0 ||
 	    ip->ip_dst.s_addr != sin->sin_addr.s_addr) {
